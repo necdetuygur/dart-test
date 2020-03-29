@@ -45,16 +45,13 @@ void HttpServ() {
     server.listen((request) {
       switch (request.method) {
         case 'GET':
-          String uriPath =
-              request.uri.path == "/" ? "index.html" : request.uri.path;
-          uriPath.indexOf(".html") > -1
-              ? request.response.headers
-                  .set("Content-Type", "text/html; charset=UTF-8")
-              : uriPath.indexOf(".js") > -1
-                  ? request.response.headers
-                      .set("Content-Type", "text/javascript; charset=UTF-8")
-                  : request.response.headers
-                      .set("Content-Type", "text/javascript; charset=UTF-8");
+          String u = request.uri.path;
+          String uriPath = u == "/" ? "index.html" : u;
+          String fileType = "plain";
+          if (uriPath.indexOf(".html") > -1) fileType = "html";
+          if (uriPath.indexOf(".js") > -1) fileType = "javascript";
+          request.response.headers
+              .set("Content-Type", "text/$fileType; charset=UTF-8");
           final File file =
               new File(path.join("./public", uriPath.replaceAll("/", "")));
           file.exists().then((bool found) {
