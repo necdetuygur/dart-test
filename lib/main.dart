@@ -2,6 +2,9 @@ import 'dart:io';
 import 'functions.dart';
 
 main() {
+  SocketServ();
+  HttpServ();
+
   String GlobalResponse = "<script>window.top.location.reload();</script>";
   int Port = 8035;
   IzmirNamaz().then((String Response) {
